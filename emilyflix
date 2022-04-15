@@ -1,17 +1,11 @@
 #!/bin/zsh
-
-# Created with <3 by Emily
-
-if [ -f "/home/subject05/.aliases.sh" ]; then
-  source /home/subject05/.aliases.sh
-fi
-
+if [ -f /home/subject05/.aliases.sh ]; then
+   source /home/subject05/.aliases.sh;fi
 
 query=$(printf '%s' "$*" | tr ' ' '+' )
-
-movie=$(curl -s https://1337x.wtf/search/$query/1/ | grep -Eo "torrent\/[0-9]{7}\/[a-zA-Z0-9?%-]*/" | fzf )
+movie=$(curl -s https://1337x.wtf/search/$query/1/ | grep -Eo "torrent\/[0-9]{7}\/[a-zA-Z0-9?%-]*/" | fzf || echo "Missing fzf in path" )
 
 magnet=$(curl -s https://1337x.wtf/$movie | grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" | head -n 1)
 
-if [ -z $magnet ]; then echo "Cancelled"
-else webtorrent -q $magnet --celluloid; fi
+if [ -z $magnet ]; then echo "Cancelled"; else
+webtorrent -q $magnet --celluloid  || echo "Missing webtorrent in path";fi
