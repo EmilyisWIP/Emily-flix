@@ -1,5 +1,11 @@
 #!/bin/zsh
-source /home/subject05/.aliases.sh
+
+# Created with <3 by Emily
+
+if [ -f "/home/subject05/.aliases.sh" ]; then
+  source /home/subject05/.aliases.sh
+fi
+
 
 query=$(printf '%s' "$*" | tr ' ' '+' )
 
@@ -9,5 +15,3 @@ magnet=$(curl -s https://1337x.wtf/$movie | grep -Po "magnet:\?xt=urn:btih:[a-zA
 
 if [ -z $magnet ]; then echo "Cancelled"
 else webtorrent -q $magnet --celluloid; fi
-
-#made by emily
